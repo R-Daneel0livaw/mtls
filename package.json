@@ -2,10 +2,11 @@
   "name": "mtls",
   "version": "1.0.0",
   "description": "Testing of TLS ans mTLS Functionality",
-  "main": "index.js",
+  "main": "src/server.js",
   "type": "module",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "node src/server.js",
+    "test": "mocha"
   },
   "keywords": [],
   "author": "",
