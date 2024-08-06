@@ -7,3 +7,5 @@ node_modules
 *.priv
 *.pfx
 *.p7b
+*.srl
+*.csr

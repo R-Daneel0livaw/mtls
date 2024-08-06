@@ -8,7 +8,8 @@ const options = {
   method: 'GET',
   key: fs.readFileSync('client.key'),
   cert: fs.readFileSync('client.crt'),
-  ca: fs.readFileSync('rootCA.pem'),
+  ca: fs.readFileSync('ca.pem'),
+  // ca: fs.readFileSync('rootCA.pem'),
   rejectUnauthorized: true,
 };
 
@@ -17,6 +18,7 @@ const req = https.request(options, (res) => {
   res.on('data', (chunk) => {
     data += chunk;
   });
+
   res.on('end', () => {
     console.log('Response:', data);
   });
