@@ -5,9 +5,9 @@ import express from 'express';
 const app = express();
 
 const options = {
-  key: fs.readFileSync('server.key'),
-  cert: fs.readFileSync('server.crt'),
-  ca: fs.readFileSync('ca.pem'),
+  key: fs.readFileSync('src/server.key'),
+  cert: fs.readFileSync('src/server.crt'),
+  ca: fs.readFileSync('src/ca.pem'),
   // cert: fs.readFileSync('server-chain.crt'),
   // ca: fs.readFileSync('rootCA.pem'),
   requestCert: true,

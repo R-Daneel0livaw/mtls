@@ -6,9 +6,9 @@ const options = {
   port: 3000,
   path: '/',
   method: 'GET',
-  key: fs.readFileSync('client.key'),
-  cert: fs.readFileSync('client.crt'),
-  ca: fs.readFileSync('ca.pem'),
+  key: fs.readFileSync('src/client.key'),
+  cert: fs.readFileSync('src/client.crt'),
+  ca: fs.readFileSync('src/ca.pem'),
   // ca: fs.readFileSync('rootCA.pem'),
   rejectUnauthorized: true,
 };
