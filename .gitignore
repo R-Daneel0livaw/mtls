@@ -1,1 +1,9 @@
 node_modules
+*.pem
+*.key
+*.crt
+*.cer
+*.der
+*.priv
+*.pfx
+*.p7b
