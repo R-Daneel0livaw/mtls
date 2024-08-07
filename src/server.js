@@ -2,26 +2,32 @@ import fs from 'fs';
 import https from 'https';
 import express from 'express';
 
-const app = express();
+export function startServer({ port, serverCert, serverKey, caCerts, scenario }) {
+  const app = express();
 
-const options = {
-  key: fs.readFileSync('src/server.key'),
-  cert: fs.readFileSync('src/server.crt'),
-  ca: fs.readFileSync('src/ca.pem'),
-  // cert: fs.readFileSync('server-chain.crt'),
-  // ca: fs.readFileSync('rootCA.pem'),
-  requestCert: true,
-  rejectUnauthorized: true,
-};
+  const certPath = `./certs/scenario${scenario}/${serverCert}`;
+  const keyPath = `./certs/scenario${scenario}/${serverKey}`;
+  const caPaths = caCerts.map(cert => `./certs/scenario${scenario}/${cert}`);
 
-app.get('/', (req, res) => {
-  if (req.client.authorized) {
-    res.send('Hello, mutual TLS client!');
-  } else {
-    res.status(401).send('Client certificate required.');
-  }
-});
+  const options = {
+    key: fs.readFileSync(keyPath),
+    cert: fs.readFileSync(certPath),
+    ca: caPaths.map(certPath => fs.readFileSync(certPath)), 
+    requestCert: true,
+    rejectUnauthorized: true,
+  };
 
-https.createServer(options, app).listen(3000, () => {
-  console.log('Server is listening on port 3000');
-});
+  app.get('/', (req, res) => {
+    if (req.client.authorized) {
+      res.send('Hello, mutual TLS client!');
+    } else {
+      res.status(401).send('Client certificate required.');
+    }
+  });
+
+  const server = https.createServer(options, app).listen(port, () => {
+    console.log(`Server is listening on port ${port}`);
+  });
+  
+  return server;
+}
