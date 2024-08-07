@@ -1,2 +1,2 @@
 # mtls
-Testing of TLS ans mTLS Functionality
+Testing of TLS and mTLS Functionality
