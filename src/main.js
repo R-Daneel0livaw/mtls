@@ -1,35 +1,21 @@
 import { makeRequest } from './client.js';
 import { startServer } from './server.js';
 
-function performRequest(serverConfig, requestConfig) {
-  const server = startServer(serverConfig);
+export function performRequest(serverConfig, requestConfig) {
+  return new Promise((resolve, reject) => {
+    const server = startServer(serverConfig);
 
-  makeRequest(requestConfig)
+    setTimeout(() => {
+      server.close((err) => {
+        if (err) {
+          reject(err);
+        } else {
+          console.log('Server has been closed.');
+          resolve();
+        }
+      });
+    }, 2000); 
 
-  setTimeout(() => {
-    server.close(() => {
-      console.log('Server has been closed.');
-    });
-  }, 1000); 
+    makeRequest(requestConfig);
+  });
 }
-
-const serverConfig = {
-  port: 8443,
-  serverCert: 'server.crt',
-  serverKey: 'server.key',
-  caCerts: ['ca.pem'],
-  scenario: 1
-}
-
-const requestConfig = {
-    host: 'localhost',
-    port: 8443,
-    path: '/',
-    clientCert: 'client.crt',
-    clientKey: 'client.key',
-    caCerts: ['ca.pem'],
-    scenario: 1
-}
-
-performRequest(serverConfig, requestConfig);
-
