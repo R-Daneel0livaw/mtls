@@ -22,7 +22,7 @@ describe('performRequest Function Test', function () {
     scenario: 1
   }
 
-  it('should start the server, make a request, and receive the expected mTLS message', function(done) {
+  it('should receive the expected mTLS message and status for client and server cert with common root', function(done) {
     performRequest(serverConfig, requestConfig).then((response) => {
       expect(response.statusCode).to.equal(200);
       expect(response.message).to.equal('Hello, mutual TLS client!');
