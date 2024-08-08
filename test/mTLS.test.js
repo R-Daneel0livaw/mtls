@@ -22,9 +22,10 @@ describe('performRequest Function Test', function () {
     scenario: 1
   }
 
-  it('should start the server, make a request, and then close the server', function (done) {
-    performRequest(serverConfig, requestConfig).then(() => {
-      // expect(response).to.equal('Hello, mutual TLS client!');
+  it('should start the server, make a request, and receive the expected mTLS message', function(done) {
+    performRequest(serverConfig, requestConfig).then((response) => {
+      expect(response.statusCode).to.equal(200);
+      expect(response.message).to.equal('Hello, mutual TLS client!');
       done();
     }).catch(done);
   });

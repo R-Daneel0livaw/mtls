@@ -7,12 +7,12 @@ export function startServer({ port, serverCert, serverKey, caCerts, scenario }) 
 
   const certPath = `./certs/scenario${scenario}/${serverCert}`;
   const keyPath = `./certs/scenario${scenario}/${serverKey}`;
-  const caPaths = caCerts.map(cert => `./certs/scenario${scenario}/${cert}`);
+  const caPaths = caCerts.map(ca => `./certs/scenario${scenario}/${ca}`);
 
   const options = {
     key: fs.readFileSync(keyPath),
     cert: fs.readFileSync(certPath),
-    ca: caPaths.map(certPath => fs.readFileSync(certPath)), 
+    ca: caPaths.map(ca => fs.readFileSync(ca)), 
     requestCert: true,
     rejectUnauthorized: true,
   };
