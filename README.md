@@ -4,7 +4,7 @@ Testing of TLS and mTLS Functionality
 ## Prerequisites
 
 1. Create (if non-existent) a top-level `certs` directory and a scenario# directory within it for each test case as the below instructions detail.
-2. Ensure `openssl-custom.cnf` exists within the `certs`.
+2. Ensure `openssl-custom.cnf` exists within the `certs` and update as required.
 
 ## Scenario 1
 
@@ -44,6 +44,11 @@ openssl req -new -key client.key -out client.csr -subj "/C=US/ST=State/L=City/O=
 # Sign client certificate with CA
 
 openssl x509 -req -in client.csr -CA ca.pem -CAkey ca.key -CAcreateserial -out client.crt -days 365 -sha256
+
+# Combine leaf and intermediate certificates into a chain
+
+cat server.crt intermediateCA.pem > server-chain.crt
+cat client.crt intermediateCA.pem > client-chain.crt
 
 ```
 
