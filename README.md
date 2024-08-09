@@ -45,11 +45,6 @@ openssl req -new -key client.key -out client.csr -subj "/C=US/ST=State/L=City/O=
 
 openssl x509 -req -in client.csr -CA ca.pem -CAkey ca.key -CAcreateserial -out client.crt -days 365 -sha256
 
-# Combine leaf and intermediate certificates into a chain
-
-cat server.crt intermediateCA.pem > server-chain.crt
-cat client.crt intermediateCA.pem > client-chain.crt
-
 ```
 
 
@@ -96,6 +91,10 @@ openssl req -new -key client.key -out client.csr -subj "/C=US/ST=State/L=City/O=
 openssl x509 -req -in client.csr -CA intermediateCA.pem -CAkey intermediateCA.key -CAcreateserial -out client.crt -days 365 -sha256 -extensions v3_client -extfile openssl-custom.cnf
 
 
+# Combine leaf and intermediate certificates into a chain
+
+cat server.crt intermediateCA.pem > server-chain.crt
+cat client.crt intermediateCA.pem > client-chain.crt
 
 ```
 
