@@ -10,3 +10,4 @@ certs
 *.p7b
 *.srl
 *.csr
+*.cnf
