@@ -4,7 +4,7 @@ Testing of TLS and mTLS Functionality
 ## Prerequisites
 
 1. Create (if non-existent) a top-level `certs` directory and a scenario# directory within it for each test case as the below instructions detail.
-2. Ensure openssl-custom.cnf exists within the `certs`.
+2. Ensure `openssl-custom.cnf` exists within the `certs`.
 
 ## Scenario 1
 
