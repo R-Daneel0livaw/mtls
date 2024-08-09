@@ -17,7 +17,7 @@ cd scenario1
 
 ```
 
-Generate certificates.
+Generate root, server and client certificates.
 
 ```bash
 
@@ -59,7 +59,7 @@ cd scenario2
 
 ```
 
-Generate certificates.
+Generate root, intermediate, server and client certificates.
 
 ```bash
 
