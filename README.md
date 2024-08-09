@@ -7,7 +7,7 @@ Create a top-level `certs` directory and a scenario# directory within it for eac
 
 ## Scenario 1
 
-Generate scenaro1 directory.
+Generate scenario1 directory.
 
 ```bash
 
@@ -49,7 +49,7 @@ openssl x509 -req -in client.csr -CA ca.pem -CAkey ca.key -CAcreateserial -out c
 
 ## Scenario 2
 
-Generate scenaro2 directory.
+Generate scenario2 directory.
 
 ```bash
 
