@@ -80,7 +80,37 @@ describe('mTLS Tests', function () {
       done(new Error('Expected request to fail, but it succeeded.'));
     }).catch(err => {
       expect(err).to.be.an('error');
+      expect(err.code).to.equal('ECONNRESET');
       expect(err.message).to.equal('socket hang up'); 
+      done(); 
+    });
+  });
+
+  it('should fail to successfully connect via mTLS due to expected intermediate certificate not being provided via server', function (done) {
+    const serverConfig = {
+      port: 8443,
+      serverCert: 'server.crt',
+      serverKey: 'server.key',
+      caCerts: ['rootCA.pem'],
+      scenario: 2
+    }
+
+    const requestConfig = {
+      host: 'localhost',
+      port: 8443,
+      path: '/',
+      clientCert: 'client-chain.crt',
+      clientKey: 'client.key',
+      caCerts: ['rootCA.pem'],
+      scenario: 2
+    }
+
+    performRequest(serverConfig, requestConfig).then(() => {
+      done(new Error('Expected request to fail, but it succeeded.'));
+    }).catch(err => {
+      expect(err).to.be.an('error');
+      expect(err.code).to.equal('UNABLE_TO_VERIFY_LEAF_SIGNATURE');
+      expect(err.message).to.equal('unable to verify the first certificate'); 
       done(); 
     });
   });

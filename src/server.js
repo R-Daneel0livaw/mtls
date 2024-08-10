@@ -30,7 +30,6 @@ export function startServer({ port, serverCert, serverKey, caCerts, scenario }) 
   });
 
   server.on('tlsClientError', (err, socket) => {
-    console.error('TLS client error:', err.message);
     socket.destroy(err);
   });
   
