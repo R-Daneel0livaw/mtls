@@ -63,7 +63,7 @@ describe('mTLS Tests', function () {
       serverCert: 'server-chain.crt',
       serverKey: 'server.key',
       caCerts: ['rootCA.pem'],
-      scenario: 2
+      scenario: 3
     }
 
     const requestConfig = {
@@ -73,7 +73,7 @@ describe('mTLS Tests', function () {
       clientCert: 'client.crt',
       clientKey: 'client.key',
       caCerts: ['rootCA.pem'],
-      scenario: 2
+      scenario: 3
     }
 
     performRequest(serverConfig, requestConfig).then(() => {
@@ -92,7 +92,7 @@ describe('mTLS Tests', function () {
       serverCert: 'server.crt',
       serverKey: 'server.key',
       caCerts: ['rootCA.pem'],
-      scenario: 2
+      scenario: 4
     }
 
     const requestConfig = {
@@ -102,7 +102,7 @@ describe('mTLS Tests', function () {
       clientCert: 'client-chain.crt',
       clientKey: 'client.key',
       caCerts: ['rootCA.pem'],
-      scenario: 2
+      scenario: 4
     }
 
     performRequest(serverConfig, requestConfig).then(() => {
