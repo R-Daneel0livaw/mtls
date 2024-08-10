@@ -56,4 +56,32 @@ describe('mTLS Tests', function () {
       done();
     }).catch(done);
   });
+
+  it('should fail to successfully connect via mTLS due to expected intermediate certificate not being provided via client', function (done) {
+    const serverConfig = {
+      port: 8443,
+      serverCert: 'server-chain.crt',
+      serverKey: 'server.key',
+      caCerts: ['rootCA.pem'],
+      scenario: 2
+    }
+
+    const requestConfig = {
+      host: 'localhost',
+      port: 8443,
+      path: '/',
+      clientCert: 'client.crt',
+      clientKey: 'client.key',
+      caCerts: ['rootCA.pem'],
+      scenario: 2
+    }
+
+    performRequest(serverConfig, requestConfig).then(() => {
+      done(new Error('Expected request to fail, but it succeeded.'));
+    }).catch(err => {
+      expect(err).to.be.an('error');
+      expect(err.message).to.equal('socket hang up'); 
+      done(); 
+    });
+  });
 });

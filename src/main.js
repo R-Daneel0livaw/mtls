@@ -20,6 +20,7 @@ export function performRequest(serverConfig, requestConfig) {
       })
       .catch((error) => {
         server.close(() => {
+          console.log('Server has been closed.');
           reject(error);
         });
       });
