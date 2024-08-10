@@ -28,6 +28,11 @@ export function startServer({ port, serverCert, serverKey, caCerts, scenario }) 
   const server = https.createServer(options, app).listen(port, () => {
     console.log(`Server is listening on port ${port}`);
   });
+
+  server.on('tlsClientError', (err, socket) => {
+    console.error('TLS client error:', err.message);
+    socket.destroy(err);
+  });
   
   return server;
 }
