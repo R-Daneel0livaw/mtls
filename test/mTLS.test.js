@@ -5,7 +5,7 @@ describe('mTLS Tests', function () {
   this.timeout(5000);
 
 
-  it('should receive the expected mTLS message and status for client and server cert with common root', function (done) {
+  it('should successfully connect via mTLS due to expected client and server certs with root in trust', function (done) {
     const serverConfig = {
       port: 8443,
       serverCert: 'server.crt',
@@ -31,7 +31,7 @@ describe('mTLS Tests', function () {
     }).catch(done);
   });
 
-  it('should receive the expected mTLS message and status for client and server cert, intermediate and root', function (done) {
+  it('should successfully connect vis mTLS due to expected client, server and intermediate certs with root in trust', function (done) {
     const serverConfig = {
       port: 8443,
       serverCert: 'server-chain.crt',
