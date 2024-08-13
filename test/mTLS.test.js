@@ -198,4 +198,30 @@ describe('mTLS Tests', function () {
       done(); 
     });
   });
+
+  it('should successfully connect via mTLS due to expected client and server certs despite redundant intermediate and root in chain', function (done) {
+    const serverConfig = {
+      port: 8443,
+      serverCert: 'server.crt',
+      serverKey: 'server.key',
+      caCerts: ['intermediateCA.pem', 'rootCA.pem'],
+      scenario: 8
+    }
+
+    const requestConfig = {
+      host: 'localhost',
+      port: 8443,
+      path: '/',
+      clientCert: 'client-chain.crt',
+      clientKey: 'client.key',
+      caCerts: ['intermediateCA.pem', 'rootCA.pem'],
+      scenario: 8
+    }
+
+    performRequest(serverConfig, requestConfig).then((response) => {
+      expect(response.statusCode).to.equal(200);
+      expect(response.message).to.equal('Hello, mutual TLS client!');
+      done();
+    }).catch(done);
+  });
 });
