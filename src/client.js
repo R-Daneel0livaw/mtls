@@ -3,19 +3,27 @@ import https from 'https';
 
 export function makeRequest({ host, port, path, clientCert, clientKey, caCerts, scenario }) {
   return new Promise((resolve, reject) => {
-    const certPath = `./certs/scenario${scenario}/${clientCert}`;
-    const keyPath = `./certs/scenario${scenario}/${clientKey}`;
-    const caPaths = caCerts.map(ca => `./certs/scenario${scenario}/${ca}`);
-
     const options = {
       hostname: host,
       port: port,
       path: path,
       method: 'GET',
-      key: fs.readFileSync(keyPath),
-      cert: fs.readFileSync(certPath),
-      ca: caPaths.map(ca => fs.readFileSync(ca)),
     };
+
+    if (clientCert) {
+      const certPath = `./certs/scenario${scenario}/${clientCert}`;
+      options.cert = fs.readFileSync(certPath);
+    }
+
+    if (clientKey) {
+      const keyPath = `./certs/scenario${scenario}/${clientKey}`;
+      options.key = fs.readFileSync(keyPath);
+    }
+
+    if (caCerts && caCerts.length > 0) {
+      const caPaths = caCerts.map(ca => `./certs/scenario${scenario}/${ca}`);
+      options.ca = caPaths.map(ca => fs.readFileSync(ca));
+    }
 
     const req = https.request(options, (res) => {
       let data = '';
