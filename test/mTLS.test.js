@@ -225,3 +225,58 @@ describe('mTLS Tests', function () {
     }).catch(done);
   });
 });
+
+it('should fail to successfully connect via mTLS due to client cert not being provided via the client', function (done) {
+  const serverConfig = {
+    port: 8443,
+    serverCert: 'server.crt',
+    serverKey: 'server.key',
+    caCerts: ['intermediateCA.pem', 'rootCA.pem'],
+    scenario: 8
+  }
+
+  const requestConfig = {
+    host: 'localhost',
+    port: 8443,
+    path: '/',
+    caCerts: ['intermediateCA.pem', 'rootCA.pem'],
+    scenario: 8
+  }
+
+  performRequest(serverConfig, requestConfig).then(() => {
+    done(new Error('Expected request to fail, but it succeeded.'));
+  }).catch(err => {
+    expect(err).to.be.an('error');
+    expect(err.code).to.equal('ERR_SSL_TLSV13_ALERT_CERTIFICATE_REQUIRED');
+    expect(err.reason).to.equal('tlsv13 alert certificate required');
+    done();
+  });
+});
+
+it('should fail to successfully connect via mTLS due to server cert not being provided via the server', function (done) {
+  const serverConfig = {
+    port: 8443,
+    caCerts: ['intermediateCA.pem', 'rootCA.pem'],
+    scenario: 8
+  }
+
+  const requestConfig = {
+    host: 'localhost',
+    port: 8443,
+    path: '/',
+    clientCert: 'client.crt',
+    clientKey: 'client.key',
+    caCerts: ['intermediateCA.pem', 'rootCA.pem'],
+    scenario: 8
+  }
+
+  performRequest(serverConfig, requestConfig).then(() => {
+    done(new Error('Expected request to fail, but it succeeded.'));
+  }).catch(err => {
+    expect(err).to.be.an('error');
+    expect(err.code).to.equal('EPROTO');
+    expect(err.message).to.contain('SSL');
+    done();
+  });
+});
+
