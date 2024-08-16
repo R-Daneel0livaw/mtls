@@ -4,7 +4,6 @@ import { performRequest } from '../src/main.js';
 describe('mTLS Tests', function () {
   this.timeout(5000);
 
-
   it('should successfully connect via mTLS due to expected client and server certs with root in trust', function (done) {
     const serverConfig = {
       port: 8443,
@@ -276,6 +275,62 @@ it('should fail to successfully connect via mTLS due to server cert not being pr
     expect(err).to.be.an('error');
     expect(err.code).to.equal('EPROTO');
     expect(err.message).to.contain('SSL');
+    done();
+  });
+});
+
+it('should fail to successfully connect via mTLS due to trust store certs not being present in client', function (done) {
+  const serverConfig = {
+    port: 8443,
+    serverCert: 'server.crt',
+    serverKey: 'server.key',
+    caCerts: ['intermediateCA.pem', 'rootCA.pem'],
+    scenario: 8
+  }
+
+  const requestConfig = {
+    host: 'localhost',
+    port: 8443,
+    path: '/',
+    clientCert: 'client.crt',
+    clientKey: 'client.key',
+    scenario: 8
+  }
+
+  performRequest(serverConfig, requestConfig).then(() => {
+    done(new Error('Expected request to fail, but it succeeded.'));
+  }).catch(err => {
+    expect(err).to.be.an('error');
+    expect(err.code).to.equal('SELF_SIGNED_CERT_IN_CHAIN');
+    expect(err.message).to.equal('self-signed certificate in certificate chain');
+    done();
+  });
+});
+
+it('should fail to successfully connect via mTLS due to trust store certs not being present in server', function (done) {
+  const serverConfig = {
+    port: 8443,
+    serverCert: 'server.crt',
+    serverKey: 'server.key',
+    scenario: 8
+  }
+
+  const requestConfig = {
+    host: 'localhost',
+    port: 8443,
+    path: '/',
+    clientCert: 'client.crt',
+    clientKey: 'client.key',
+    caCerts: ['intermediateCA.pem', 'rootCA.pem'],
+    scenario: 8
+  }
+
+  performRequest(serverConfig, requestConfig).then(() => {
+    done(new Error('Expected request to fail, but it succeeded.'));
+  }).catch(err => {
+    expect(err).to.be.an('error');
+    expect(err.code).to.equal('ECONNRESET');
+    expect(err.message).to.equal('socket hang up');
     done();
   });
 });
