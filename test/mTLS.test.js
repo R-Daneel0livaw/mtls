@@ -231,7 +231,7 @@ it('should fail to successfully connect via mTLS due to client cert not being pr
     serverCert: 'server.crt',
     serverKey: 'server.key',
     caCerts: ['intermediateCA.pem', 'rootCA.pem'],
-    scenario: 8
+    scenario: 9
   }
 
   const requestConfig = {
@@ -239,7 +239,7 @@ it('should fail to successfully connect via mTLS due to client cert not being pr
     port: 8443,
     path: '/',
     caCerts: ['intermediateCA.pem', 'rootCA.pem'],
-    scenario: 8
+    scenario: 9
   }
 
   performRequest(serverConfig, requestConfig).then(() => {
@@ -256,7 +256,7 @@ it('should fail to successfully connect via mTLS due to server cert not being pr
   const serverConfig = {
     port: 8443,
     caCerts: ['intermediateCA.pem', 'rootCA.pem'],
-    scenario: 8
+    scenario: 10
   }
 
   const requestConfig = {
@@ -266,7 +266,7 @@ it('should fail to successfully connect via mTLS due to server cert not being pr
     clientCert: 'client.crt',
     clientKey: 'client.key',
     caCerts: ['intermediateCA.pem', 'rootCA.pem'],
-    scenario: 8
+    scenario: 10
   }
 
   performRequest(serverConfig, requestConfig).then(() => {
