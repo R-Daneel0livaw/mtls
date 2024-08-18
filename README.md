@@ -478,7 +478,7 @@ openssl x509 -req -in client.csr -CA intermediateCA.pem -CAkey intermediateCA.ke
 
 ## Scenario 11
 
-Generate scenario10 directory.
+Generate scenario11 directory.
 
 ```bash
 
@@ -523,7 +523,7 @@ openssl x509 -req -in client.csr -CA intermediateCA.pem -CAkey intermediateCA.ke
 
 ## Scenario 12
 
-Generate scenario10 directory.
+Generate scenario12 directory.
 
 ```bash
 
