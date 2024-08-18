@@ -285,7 +285,7 @@ it('should fail to successfully connect via mTLS due to trust store certs not be
     serverCert: 'server.crt',
     serverKey: 'server.key',
     caCerts: ['intermediateCA.pem', 'rootCA.pem'],
-    scenario: 8
+    scenario: 11
   }
 
   const requestConfig = {
@@ -294,7 +294,7 @@ it('should fail to successfully connect via mTLS due to trust store certs not be
     path: '/',
     clientCert: 'client.crt',
     clientKey: 'client.key',
-    scenario: 8
+    scenario: 11
   }
 
   performRequest(serverConfig, requestConfig).then(() => {
@@ -312,7 +312,7 @@ it('should fail to successfully connect via mTLS due to trust store certs not be
     port: 8443,
     serverCert: 'server.crt',
     serverKey: 'server.key',
-    scenario: 8
+    scenario: 12
   }
 
   const requestConfig = {
@@ -322,7 +322,7 @@ it('should fail to successfully connect via mTLS due to trust store certs not be
     clientCert: 'client.crt',
     clientKey: 'client.key',
     caCerts: ['intermediateCA.pem', 'rootCA.pem'],
-    scenario: 8
+    scenario: 12
   }
 
   performRequest(serverConfig, requestConfig).then(() => {
