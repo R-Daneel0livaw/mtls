@@ -335,3 +335,60 @@ it('should fail to successfully connect via mTLS due to trust store certs not be
   });
 });
 
+it('should fail to successfully connect via mTLS due to expired client certificate', function (done) {
+  const serverConfig = {
+    port: 8443,
+    serverCert: 'server.crt',
+    serverKey: 'server.key',
+    caCerts: ['intermediateCA.pem', 'rootCA.pem'],
+    scenario: 7
+  }
+
+  const requestConfig = {
+    host: 'localhost',
+    port: 8443,
+    path: '/',
+    clientCert: 'client.crt',
+    clientKey: 'client.key',
+    caCerts: ['intermediateCA.pem'],
+    scenario: 7
+  }
+
+  performRequest(serverConfig, requestConfig).then(() => {
+    done(new Error('Expected request to fail, but it succeeded.'));
+  }).catch(err => {
+    expect(err).to.be.an('error');
+    expect(err.code).to.equal('UNABLE_TO_GET_ISSUER_CERT');
+    expect(err.message).to.equal('unable to get issuer certificate');
+    done();
+  });
+});
+
+it('should fail to successfully connect via mTLS due to expired server certificate', function (done) {
+  const serverConfig = {
+    port: 8443,
+    serverCert: 'server.crt',
+    serverKey: 'server.key',
+    caCerts: ['intermediateCA.pem', 'rootCA.pem'],
+    scenario: 7
+  }
+
+  const requestConfig = {
+    host: 'localhost',
+    port: 8443,
+    path: '/',
+    clientCert: 'client.crt',
+    clientKey: 'client.key',
+    caCerts: ['intermediateCA.pem'],
+    scenario: 7
+  }
+
+  performRequest(serverConfig, requestConfig).then(() => {
+    done(new Error('Expected request to fail, but it succeeded.'));
+  }).catch(err => {
+    expect(err).to.be.an('error');
+    expect(err.code).to.equal('UNABLE_TO_GET_ISSUER_CERT');
+    expect(err.message).to.equal('unable to get issuer certificate');
+    done();
+  });
+});
