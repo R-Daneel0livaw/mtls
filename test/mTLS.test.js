@@ -340,8 +340,8 @@ it('should fail to successfully connect via mTLS due to expired client certifica
     port: 8443,
     serverCert: 'server.crt',
     serverKey: 'server.key',
-    caCerts: ['intermediateCA.pem', 'rootCA.pem'],
-    scenario: 7
+    caCerts: ['rootCA.pem'],
+    scenario: 13
   }
 
   const requestConfig = {
@@ -350,8 +350,8 @@ it('should fail to successfully connect via mTLS due to expired client certifica
     path: '/',
     clientCert: 'client.crt',
     clientKey: 'client.key',
-    caCerts: ['intermediateCA.pem'],
-    scenario: 7
+    caCerts: ['rootCA.pem'],
+    scenario: 13
   }
 
   performRequest(serverConfig, requestConfig).then(() => {
@@ -369,8 +369,8 @@ it('should fail to successfully connect via mTLS due to expired server certifica
     port: 8443,
     serverCert: 'server.crt',
     serverKey: 'server.key',
-    caCerts: ['intermediateCA.pem', 'rootCA.pem'],
-    scenario: 7
+    caCerts: ['rootCA.pem'],
+    scenario: 14
   }
 
   const requestConfig = {
@@ -379,8 +379,8 @@ it('should fail to successfully connect via mTLS due to expired server certifica
     path: '/',
     clientCert: 'client.crt',
     clientKey: 'client.key',
-    caCerts: ['intermediateCA.pem'],
-    scenario: 7
+    caCerts: ['rootCA.pem'],
+    scenario: 14
   }
 
   performRequest(serverConfig, requestConfig).then(() => {
