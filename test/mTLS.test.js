@@ -354,6 +354,7 @@ it('should fail to successfully connect via mTLS due to expired client certifica
     scenario: 13
   }
 
+
   performRequest(serverConfig, requestConfig).then(() => {
     done(new Error('Expected request to fail, but it succeeded.'));
   }).catch(err => {
