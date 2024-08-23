@@ -597,3 +597,36 @@ openssl req -new -key client.key -out client.csr
 openssl x509 -req -in client.csr -CA rootCA.crt -CAkey rootCA.key -CAcreateserial -out client.crt -days 365 -sha256
 
 ```
+
+
+## Scenario 14
+
+Generate scenario14 directory.
+
+```bash
+
+cd certs
+mkdir scenario14
+cd scenario14
+
+```
+
+Generate root, server and client certificates.
+
+```bash
+
+# Root Certificate
+openssl genrsa -out rootCA.key 2048
+openssl req -x509 -new -nodes -key rootCA.key -sha256 -days 3650 -out rootCA.crt
+
+# Non-Expired Server Certificate
+openssl genrsa -out server.key 2048
+openssl req -new -key server.key -out server.csr
+openssl x509 -req -in server.csr -CA rootCA.crt -CAkey rootCA.key -CAcreateserial -out server.crt -days 365 -sha256
+
+# Expired Client Certificate
+openssl genrsa -out client.key 2048
+openssl req -new -key client.key -out client.csr
+openssl x509 -req -in client.csr -CA rootCA.crt -CAkey rootCA.key -CAcreateserial -out client.crt -startdate 20230101000000Z -enddate 20230102000000Z -sha256
+
+```
