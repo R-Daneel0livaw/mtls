@@ -340,7 +340,7 @@ it('should fail to successfully connect via mTLS due to expired client certifica
     port: 8443,
     serverCert: 'server.crt',
     serverKey: 'server.key',
-    caCerts: ['rootCA.pem'],
+    caCerts: ['ca.pem'],
     scenario: 13
   }
 
@@ -350,7 +350,7 @@ it('should fail to successfully connect via mTLS due to expired client certifica
     path: '/',
     clientCert: 'client.crt',
     clientKey: 'client.key',
-    caCerts: ['rootCA.pem'],
+    caCerts: ['ca.pem'],
     scenario: 13
   }
 
@@ -359,8 +359,8 @@ it('should fail to successfully connect via mTLS due to expired client certifica
     done(new Error('Expected request to fail, but it succeeded.'));
   }).catch(err => {
     expect(err).to.be.an('error');
-    expect(err.code).to.equal('UNABLE_TO_GET_ISSUER_CERT');
-    expect(err.message).to.equal('unable to get issuer certificate');
+    expect(err.code).to.equal('CERT_HAS_EXPIRED');
+    expect(err.message).to.equal('certificate has expired');
     done();
   });
 });
@@ -370,7 +370,7 @@ it('should fail to successfully connect via mTLS due to expired server certifica
     port: 8443,
     serverCert: 'server.crt',
     serverKey: 'server.key',
-    caCerts: ['rootCA.pem'],
+    caCerts: ['ca.pem'],
     scenario: 14
   }
 
@@ -380,7 +380,7 @@ it('should fail to successfully connect via mTLS due to expired server certifica
     path: '/',
     clientCert: 'client.crt',
     clientKey: 'client.key',
-    caCerts: ['rootCA.pem'],
+    caCerts: ['ca.pem'],
     scenario: 14
   }
 
@@ -388,8 +388,8 @@ it('should fail to successfully connect via mTLS due to expired server certifica
     done(new Error('Expected request to fail, but it succeeded.'));
   }).catch(err => {
     expect(err).to.be.an('error');
-    expect(err.code).to.equal('UNABLE_TO_GET_ISSUER_CERT');
-    expect(err.message).to.equal('unable to get issuer certificate');
+    expect(err.code).to.equal('ECONNRESET');
+    expect(err.message).to.equal('socket hang up');
     done();
   });
 });
