@@ -1,0 +1,46 @@
+[ req ]
+default_bits        = 2048
+default_keyfile     = privkey.pem
+distinguished_name  = req_distinguished_name
+req_extensions      = req_ext
+x509_extensions     = v3_ca # The extensions to add to the self-signed cert
+
+[ req_distinguished_name ]
+countryName                 = Country Name (2 letter code)
+stateOrProvinceName         = State or Province Name (full name)
+localityName                = Locality Name (eg, city)
+organizationName            = Organization Name (eg, company)
+commonName                  = Common Name (e.g. server FQDN or YOUR name)
+
+[countryName_default]
+countryName                 = US
+
+[stateOrProvinceName_default]
+stateOrProvinceName         = State
+
+[localityName_default]
+localityName                = City
+
+[organizationName_default]
+organizationName            = Organization
+
+[commonName_default]
+commonName                  = RootCA
+
+[ v3_ca ]
+keyUsage = critical, keyCertSign, cRLSign
+basicConstraints = critical,CA:TRUE
+
+[ req_ext ]
+subjectAltName = @alt_names
+
+[alt_names]
+DNS.1   = localhost
+
+[ v3_server ]
+keyUsage = critical, digitalSignature, keyEncipherment
+extendedKeyUsage = serverAuth
+
+[ v3_client ]
+keyUsage = critical, digitalSignature
+extendedKeyUsage = clientAuth
